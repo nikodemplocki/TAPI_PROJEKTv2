@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package costumeShop;
+
+// Definicje wiadomości (Messages)
+
+// Shop structure
+message Shop {
+  int32 SHOP_ID = 1;
+  string SHOP_NAME = 2;
+  string CITY = 3;
+  string ADDRESS = 4;
+  string PHONE = 5;
+}
+
+// Costume structure
+message Costume {
+  string COSTUME_ID = 1;
+  string COSTUME_NAME = 2;
+  string TYPE = 3;
+  string SIZE = 4;
+  int32 AVAILABLE = 5;
+  int32 SHOP_ID = 6;
+}
+
+// Offer structure
+message Offer {
+  string OFFER_ID = 1;
+  int32 SHOP_ID = 2;
+  string DISCOUNT = 3;
+  string TITLE = 4;
+  string DESCRIPTION = 5;
+}
+
+// Input messages for mutations
+message ShopInput {
+  string SHOP_NAME = 1;
+  string CITY = 2;
+  string ADDRESS = 3;
+  string PHONE = 4;
+}
+
+message CostumeInput {
+  string COSTUME_NAME = 1;
+  string TYPE = 2;
+  string SIZE = 3;
+  int32 AVAILABLE = 4;
+  int32 SHOP_ID = 5;
+}
+
+message OfferInput {
+  int32 SHOP_ID = 1;
+  string DISCOUNT = 2;
+  string TITLE = 3;
+  string DESCRIPTION = 4;
+}
+
+// Query request messages
+message ShopRequest {
+  int32 SHOP_ID = 1;
+}
+
+message CostumeRequest {
+  string COSTUME_ID = 1;
+}
+
+message OfferRequest {
+  string OFFER_ID = 1;
+}
+
+// Query response messages
+message ShopList {
+  repeated Shop shops = 1;
+}
+
+message CostumeList {
+  repeated Costume costumes = 1;
+}
+
+message OfferList {
+  repeated Offer offers = 1;
+}
+
+// Mutation response messages
+message MutationResponse {
+  string message = 1;
+}
+
+// Service definition
+service CostumeShopService {
+  // Shops
+  rpc GetShops(google.protobuf.Empty) returns (ShopList);
+  rpc GetShop(ShopRequest) returns (Shop);
+  rpc AddShop(ShopInput) returns (Shop);
+  rpc UpdateShop(Shop) returns (Shop);
+  rpc DeleteShop(ShopRequest) returns (MutationResponse);
+
+  // Costumes
+  rpc GetCostumes(google.protobuf.Empty) returns (CostumeList);
+  rpc GetCostume(CostumeRequest) returns (Costume);
+  rpc AddCostume(CostumeInput) returns (Costume);
+  rpc UpdateCostume(Costume) returns (Costume);
+  rpc DeleteCostume(CostumeRequest) returns (MutationResponse);
+
+  // Offers
+  rpc GetOffers(google.protobuf.Empty) returns (OfferList);
+  rpc GetOffer(OfferRequest) returns (Offer);
+  rpc AddOffer(OfferInput) returns (Offer);
+  rpc UpdateOffer(Offer) returns (Offer);
+  rpc DeleteOffer(OfferRequest) returns (MutationResponse);
+}

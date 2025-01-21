@@ -1,0 +1,388 @@
+npm run dev
+
+Wymaganie 1. REST- ZAPYTANIA:
+1. Shops
+a) GET - Pobranie wszystkich sklepów
+http://localhost:3000/api/shops
+
+b) GET - Pobranie jednego sklepu
+http://localhost:3000/api/shops/1
+
+c) POST - Dodanie nowego sklepu
+http://localhost:3000/api/shops
+
+body:
+{
+  "SHOP_ID": "3",
+  "SHOP_NAME": "New Shop",
+  "CITY": "Chicago",
+  "ADDRESS": "789 Michigan Ave",
+  "PHONE": "555123456"
+}
+
+d) PUT - Pełna aktualizacja sklepu
+http://localhost:3000/api/shops/3
+
+body:
+{
+  "SHOP_NAME": "Updated Shop",
+  "CITY": "San Francisco",
+  "ADDRESS": "123 Market St",
+  "PHONE": "555654321"
+}
+
+e) PATCH - Częściowa aktualizacja sklepu
+http://localhost:3000/api/shops/3
+
+body:
+{
+  "CITY": "Los Angeles"
+}
+
+f) DELETE - Usunięcie sklepu
+http://localhost:3000/api/shops/3
+
+2. Costumes
+a) GET - Pobranie wszystkich kostiumów
+http://localhost:3000/api/costumes
+
+b) GET - Pobranie jednego kostiumu
+http://localhost:3000/api/costumes/101
+
+c) POST - Dodanie nowego kostiumu
+http://localhost:3000/api/costumes
+
+body:
+{
+  "COSTUME_ID": "103",
+  "COSTUME_NAME": "Superman",
+  "TYPE": "Superhero",
+  "SIZE": "M",
+  "AVAILABLE": "7",
+  "SHOP_ID": "1"
+}
+
+d) PUT - Pełna aktualizacja kostiumu
+http://localhost:3000/api/costumes/103
+
+body:
+{
+  "COSTUME_NAME": "Wonder Woman",
+  "TYPE": "Superhero",
+  "SIZE": "L",
+  "AVAILABLE": "5",
+  "SHOP_ID": "1"
+}
+
+e) PATCH - Częściowa aktualizacja kostiumu
+http://localhost:3000/api/costumes/103
+
+body:
+{
+  "SIZE": "XL",
+  "AVAILABLE": "10"
+}
+
+f) DELETE - Usunięcie kostiumu
+http://localhost:3000/api/costumes/103
+
+g) zagniezdzenie- kostiumy z konkretnej oferty w sklepie
+http://localhost:3000/api/shops/1/offers/1/costumes
+
+h) zagniezdzenie- kostium z konkretnej oferty
+http://localhost:3000/api/shops/1/offers/1/costumes/101
+
+3. Offers
+a) GET - Pobranie wszystkich ofert
+http://localhost:3000/api/offers
+
+b) GET - Pobranie jednej oferty
+http://localhost:3000/api/offers/1
+
+c) POST - Dodanie nowej oferty
+http://localhost:3000/api/offers
+
+body:
+{
+  "OFFER_ID": "3",
+  "SHOP_ID": "2",
+  "DISCOUNT": "20%",
+  "TITLE": "Holiday Special",
+  "DESCRIPTION": "Get 20% off all rentals during the holidays."
+}
+
+d) PUT - Pełna aktualizacja oferty
+http://localhost:3000/api/offers/3
+
+body:
+{
+  "SHOP_ID": "2",
+  "DISCOUNT": "25%",
+  "TITLE": "Winter Sale",
+  "DESCRIPTION": "Enjoy 25% off all rentals this winter."
+}
+
+e) PATCH - Częściowa aktualizacja oferty
+http://localhost:3000/api/offers/3
+
+body:
+{
+  "DISCOUNT": "30%",
+  "TITLE": "Mega Winter Sale"
+}
+
+f) DELETE - Usunięcie oferty
+http://localhost:3000/api/offers/3
+
+g) zagniezdzenie - oferty dla konkretnego sklepu
+http://localhost:3000/api/shops/1/offers
+
+
+
+
+
+
+Wymaganie 2. GRAPHQL- ZAPYTANIA:
+
+1. Shop
+a) Query: Pobranie wszystkich sklepów
+query {
+  shops {
+    SHOP_ID
+    SHOP_NAME
+    CITY
+    ADDRESS
+    PHONE
+  }
+}
+
+
+b) Query: Pobranie sklepu po ID
+query {
+  shop(SHOP_ID: 1) {
+    SHOP_ID
+    SHOP_NAME
+    CITY
+    ADDRESS
+    PHONE
+  }
+}
+
+c) Mutation: Dodanie nowego sklepu
+mutation {
+  addShop(input: {
+    SHOP_NAME: "New Costume Shop",
+    CITY: "Chicago",
+    ADDRESS: "789 Windy Ave",
+    PHONE: "123987654"
+  }) {
+    SHOP_ID
+    SHOP_NAME
+    CITY
+    ADDRESS
+    PHONE
+  }
+}
+
+
+d) Mutation: Aktualizacja sklepu
+mutation {
+  updateShop(SHOP_ID: 1, input: {
+    SHOP_NAME: "Updated Shop Name",
+    CITY: "New York",
+    ADDRESS: "456 Broadway",
+    PHONE: "111222333"
+  }) {
+    SHOP_ID
+    SHOP_NAME
+    CITY
+    ADDRESS
+    PHONE
+  }
+}
+
+e) Mutation: Usunięcie sklepu
+mutation {
+  deleteShop(SHOP_ID: 1)
+}
+
+
+2. Costumes
+a) Query: Pobranie wszystkich kostiumów
+query {
+  costumes {
+    COSTUME_ID
+    COSTUME_NAME
+    TYPE
+    SIZE
+    AVAILABLE
+    SHOP_ID
+  }
+}
+
+
+b) Query: Pobranie kostiumu po ID
+query {
+  costume(COSTUME_ID: "101") {
+    COSTUME_ID
+    COSTUME_NAME
+    TYPE
+    SIZE
+    AVAILABLE
+    SHOP_ID
+  }
+}
+
+
+c) Mutation: Dodanie nowego kostiumu
+mutation {
+  addCostume(input: {
+    COSTUME_NAME: "Superman",
+    TYPE: "Superhero",
+    SIZE: "L",
+    AVAILABLE: 10,
+    SHOP_ID: 1
+  }) {
+    COSTUME_ID
+    COSTUME_NAME
+    TYPE
+    SIZE
+    AVAILABLE
+    SHOP_ID
+  }
+}
+
+d) Mutation: Aktualizacja kostiumu
+mutation {
+  updateCostume(COSTUME_ID: "1736432411720", input: {
+    COSTUME_NAME: "Batman Updated",
+    TYPE: "Superhero",
+    SIZE: "M",
+    AVAILABLE: 5,
+    SHOP_ID: 1
+  }) {
+    COSTUME_ID
+    COSTUME_NAME
+    TYPE
+    SIZE
+    AVAILABLE
+    SHOP_ID
+  }
+}
+
+e) Mutation: Usunięcie kostiumu
+mutation {
+  deleteCostume(COSTUME_ID: "1736432411720")
+}
+
+
+3. Offers
+a) Query: Pobranie wszystkich ofert
+query {
+  offers {
+    OFFER_ID
+    SHOP_ID
+    DISCOUNT
+    TITLE
+    DESCRIPTION
+  }
+}
+
+b) Query: Pobranie oferty po ID
+query {
+  offer(OFFER_ID: "1") {
+    OFFER_ID
+    SHOP_ID
+    DISCOUNT
+    TITLE
+    DESCRIPTION
+  }
+}
+
+
+c) Mutation: Dodanie nowej oferty
+mutation {
+  addOffer(input: {
+    SHOP_ID: 2,
+    DISCOUNT: "20%",
+    TITLE: "New Year Deal",
+    DESCRIPTION: "20% off on all rentals for the new year!"
+  }) {
+    OFFER_ID
+    SHOP_ID
+    DISCOUNT
+    TITLE
+    DESCRIPTION
+  }
+}
+
+d)Mutation: Aktualizacja oferty
+mutation {
+  updateOffer(OFFER_ID: "1736432536335", input: {
+    SHOP_ID: 1,
+    DISCOUNT: "15%",
+    TITLE: "Special Discount",
+    DESCRIPTION: "15% off for loyal customers!"
+  }) {
+    OFFER_ID
+    SHOP_ID
+    DISCOUNT
+    TITLE
+    DESCRIPTION
+  }
+}
+
+e) Mutation: Usunięcie oferty
+mutation {
+  deleteOffer(OFFER_ID: "1736431346789")
+}
+
+
+
+
+
+
+
+Wymaganie 3. GRPC- DZIAŁANIE:
+drugi terminal:
+node src/grpc/server.js
+
+trzeci terminal:
+node src/grpc/client.js
+
+
+Wymaganie 4. Dokumentacja:
+a) Swagger
+http://localhost:3000/api-docs/
+
+b) Docusaurus 
+cd my-website
+npm run start
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,11 @@
+### Pobranie wszystkich sklepów
+GET http://localhost:3000/api/shops
+Content-Type: application/json
+
+### Pobranie wszystkich kostiumów
+GET http://localhost:3000/api/costumes
+Content-Type: application/json
+
+### Pobranie wszystkich ofert
+GET http://localhost:3000/api/offers
+Content-Type: application/json
